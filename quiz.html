@@ -22,10 +22,13 @@
   .opt-btn.correct { background: #E1F5EE; border-color: #1D9E75; color: #0F6E56; font-weight: 600; }
   .opt-btn.wrong { background: #FCEBEB; border-color: #E24B4A; color: #A32D2D; }
   .opt-btn.reveal { background: #E1F5EE; border-color: #1D9E75; color: #0F6E56; }
-  #explanation { display: none; background: #f8f8f5; border-radius: 8px; padding: 1rem 1.25rem; margin: 0.75rem 0; font-size: 14px; color: #444; line-height: 1.8; }
+  #result-banner { display: none; border-radius: 8px; padding: 0.9rem 1.1rem; margin: 0.75rem 0; font-size: 17px; font-weight: 700; text-align: center; letter-spacing: 0.02em; }
+  #result-banner.correct { background: #E1F5EE; color: #0F6E56; border: 1px solid #1D9E75; }
+  #result-banner.wrong { background: #FCEBEB; color: #A32D2D; border: 1px solid #E24B4A; }
+  #explanation { display: none; background: #f8f8f5; border-radius: 8px; padding: 1rem 1.25rem; margin: 0.5rem 0; font-size: 14px; color: #444; line-height: 1.8; }
   .ex-title { font-weight: 700; color: #1a1a1a; margin-bottom: 6px; font-size: 13px; }
   #explanation a { color: #1D9E75; font-size: 12px; word-break: break-all; }
-  #next-btn { display: none; padding: 0.65rem 1.75rem; background: #fff; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; cursor: pointer; color: #333; margin-top: 0.5rem; font-family: inherit; }
+  #next-btn { display: none; padding: 0.65rem 1.75rem; background: #fff; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; cursor: pointer; color: #333; margin-top: 0.75rem; font-family: inherit; }
   #next-btn:hover { background: #f5f5f5; }
   #result { display: none; text-align: center; padding: 2rem 0; }
   #result-icon { font-size: 52px; margin-bottom: 1rem; }
@@ -51,6 +54,7 @@
     <div id="q-text"></div>
   </div>
   <div id="options-wrap"></div>
+  <div id="result-banner"></div>
   <div id="explanation">
     <div class="ex-title">📝 解説</div>
     <div id="ex-body"></div>
@@ -69,10 +73,7 @@ const questions = [
   {
     label: "【１】休憩",
     q: "9時30分〜17時（お昼：1時間休憩）6.5時間勤務の予定。\n日中忙しくて、お昼の1時間休憩が取れなかった…\n16時に帰ればOK？",
-    options: [
-      "A：トータルの労働時間が6.5時間なのでOK",
-      "B：休憩は取らないといけないのでNG"
-    ],
+    options: ["A：トータルの労働時間が6.5時間なのでOK","B：休憩は取らないといけないのでNG"],
     answer: 1,
     explanation: "労働時間の長さによって、一定以上の休憩を労働時間の「途中」で取る必要があります。\nトータルの時間を調整しても、休憩を取らないことにはなりません。",
     url: "https://www.mhlw.go.jp/bunya/roudoukijun/roudoujouken02/jikan.html",
@@ -81,10 +82,7 @@ const questions = [
   {
     label: "【２】有休（年休）",
     q: "シフトは、毎週（月）（火）（木）（金）です。\n週により変則もありますが週4日。\n月火木金の4日働いて、あと平日（水）に有休は取れますか？",
-    options: [
-      "A：取れる",
-      "B：取れない"
-    ],
+    options: ["A：取れる","B：取れない"],
     answer: 1,
     explanation: "有休は、所定労働日に使える権利です。\nシフトで（水）が所定休日となっている場合、その日に有休を使うことはできません。",
     url: "https://www.jtuc-rengo.or.jp/soudan/qa/data/QA_20.html",
@@ -104,14 +102,14 @@ function showQuestion() {
   document.getElementById('q-text').textContent = q.q;
   document.getElementById('explanation').style.display = 'none';
   document.getElementById('next-btn').style.display = 'none';
-  const wrap = document.getElementById('options-wrap');
-  wrap.innerHTML = '';
+  const banner = document.getElementById('result-banner');
+  banner.style.display = 'none'; banner.className = ''; banner.textContent = '';
+  document.getElementById('options-wrap').innerHTML = '';
   q.options.forEach((opt, i) => {
     const btn = document.createElement('button');
-    btn.className = 'opt-btn';
-    btn.textContent = opt;
+    btn.className = 'opt-btn'; btn.textContent = opt;
     btn.addEventListener('click', () => selectAnswer(i));
-    wrap.appendChild(btn);
+    document.getElementById('options-wrap').appendChild(btn);
   });
 }
 
@@ -121,20 +119,26 @@ function selectAnswer(idx) {
   const q = questions[current];
   const btns = document.querySelectorAll('.opt-btn');
   btns.forEach(b => b.disabled = true);
+  const banner = document.getElementById('result-banner');
+  banner.style.display = 'block';
   if (idx === q.answer) {
     btns[idx].classList.add('correct');
     score++;
+    banner.className = 'correct';
+    banner.textContent = '✅ 正解！';
   } else {
     btns[idx].classList.add('wrong');
     btns[q.answer].classList.add('reveal');
+    banner.className = 'wrong';
+    banner.textContent = '❌ 不正解… 正しい答えを確認しましょう';
   }
   document.getElementById('score-disp').textContent = `正解: ${score}`;
-  document.getElementById('ex-body').innerHTML = q.explanation.replace(/\n/g, '<br>') + `<br><br><a href="${q.url}" target="_blank">🔗 ${q.urlLabel}</a>`;
+  document.getElementById('ex-body').innerHTML = q.explanation.replace(/\n/g,'<br>') + `<br><br><a href="${q.url}" target="_blank">🔗 ${q.urlLabel}</a>`;
   document.getElementById('explanation').style.display = 'block';
   if (current < questions.length - 1) {
     document.getElementById('next-btn').style.display = 'inline-block';
   } else {
-    setTimeout(showResult, 900);
+    setTimeout(showResult, 1200);
   }
 }
 
@@ -142,11 +146,9 @@ document.getElementById('next-btn').addEventListener('click', () => { current++;
 
 function showResult() {
   document.getElementById('progress-bar').style.width = '100%';
-  ['q-num','score-disp','question-card','options-wrap','explanation','next-btn'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
+  ['meta-row','question-card','options-wrap','result-banner','explanation','next-btn'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = 'none';
   });
-  document.getElementById('meta-row').style.display = 'none';
   document.getElementById('result').style.display = 'block';
   const pct = Math.round(score / questions.length * 100);
   let icon = '🎉', msg = '';
@@ -160,13 +162,12 @@ function showResult() {
 
 document.getElementById('restart-btn').addEventListener('click', () => {
   current = 0; score = 0;
-  ['q-num','score-disp','question-card','options-wrap','next-btn'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = '';
+  ['meta-row','question-card','options-wrap'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = id === 'meta-row' ? 'flex' : '';
   });
-  document.getElementById('meta-row').style.display = 'flex';
-  document.getElementById('explanation').style.display = 'none';
-  document.getElementById('result').style.display = 'none';
+  ['explanation','result-banner','result'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = 'none';
+  });
   showQuestion();
 });
 
