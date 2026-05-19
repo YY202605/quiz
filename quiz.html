@@ -5,37 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>間違えやすい労働法Quiz</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif; background: #f5f5f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
-  #wrap { background: #fff; border-radius: 12px; padding: 2rem 1.75rem; max-width: 600px; width: 100%; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
-  #header { text-align: center; margin-bottom: 1.75rem; }
-  #header h1 { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
-  #header p { font-size: 13px; color: #666; line-height: 1.6; }
-  #progress-bg { height: 4px; background: #e8e8e8; border-radius: 2px; margin-bottom: 1.25rem; }
-  #progress-bar { height: 4px; background: #1D9E75; border-radius: 2px; transition: width 0.4s; width: 0%; }
-  #meta-row { display: flex; justify-content: space-between; font-size: 13px; color: #888; margin-bottom: 1rem; }
-  #question-card { background: #fafaf8; border: 1px solid #e8e8e4; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
-  #q-label { font-size: 12px; color: #1D9E75; font-weight: 600; margin-bottom: 8px; letter-spacing: 0.03em; }
-  #q-text { font-size: 15px; color: #1a1a1a; line-height: 1.8; white-space: pre-wrap; }
-  .opt-btn { display: block; width: 100%; text-align: left; padding: 0.85rem 1.1rem; margin-bottom: 0.5rem; background: #fff; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; color: #1a1a1a; cursor: pointer; transition: background 0.15s, border 0.15s; line-height: 1.6; font-family: inherit; }
-  .opt-btn:hover:not(:disabled) { background: #f5fdf9; border-color: #1D9E75; }
-  .opt-btn.correct { background: #E1F5EE; border-color: #1D9E75; color: #0F6E56; font-weight: 600; }
-  .opt-btn.wrong { background: #FCEBEB; border-color: #E24B4A; color: #A32D2D; }
-  .opt-btn.reveal { background: #E1F5EE; border-color: #1D9E75; color: #0F6E56; }
-  #result-banner { display: none; border-radius: 8px; padding: 0.9rem 1.1rem; margin: 0.75rem 0; font-size: 17px; font-weight: 700; text-align: center; letter-spacing: 0.02em; }
-  #result-banner.correct { background: #E1F5EE; color: #0F6E56; border: 1px solid #1D9E75; }
-  #result-banner.wrong { background: #FCEBEB; color: #A32D2D; border: 1px solid #E24B4A; }
-  #explanation { display: none; background: #f8f8f5; border-radius: 8px; padding: 1rem 1.25rem; margin: 0.5rem 0; font-size: 14px; color: #444; line-height: 1.8; }
-  .ex-title { font-weight: 700; color: #1a1a1a; margin-bottom: 6px; font-size: 13px; }
-  #explanation a { color: #1D9E75; font-size: 12px; word-break: break-all; }
-  #next-btn { display: none; padding: 0.65rem 1.75rem; background: #fff; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; cursor: pointer; color: #333; margin-top: 0.75rem; font-family: inherit; }
-  #next-btn:hover { background: #f5f5f5; }
-  #result { display: none; text-align: center; padding: 2rem 0; }
-  #result-icon { font-size: 52px; margin-bottom: 1rem; }
-  #result-score { font-size: 32px; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem; }
-  #result-msg { font-size: 14px; color: #666; margin-bottom: 2rem; line-height: 1.7; }
-  #restart-btn { padding: 0.7rem 2rem; background: #1D9E75; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; color: #fff; font-family: inherit; font-weight: 600; }
-  #restart-btn:hover { background: #178a64; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif; background: #f5f5f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+#wrap { background: #fff; border-radius: 12px; padding: 2rem 1.75rem; max-width: 600px; width: 100%; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+#header { text-align: center; margin-bottom: 1.75rem; }
+#header h1 { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
+#header p { font-size: 13px; color: #666; line-height: 1.6; }
+#progress-bg { height: 4px; background: #e8e8e8; border-radius: 2px; margin-bottom: 1.25rem; }
+#progress-bar { height: 4px; background: #1D9E75; border-radius: 2px; transition: width 0.4s; width: 0%; }
+#meta-row { display: flex; justify-content: space-between; font-size: 13px; color: #888; margin-bottom: 1rem; }
+#question-card { background: #fafaf8; border: 1px solid #e8e8e4; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+#q-label { font-size: 12px; color: #1D9E75; font-weight: 600; margin-bottom: 8px; }
+#q-text { font-size: 15px; color: #1a1a1a; line-height: 1.8; white-space: pre-wrap; }
+.opt-btn { display: block; width: 100%; text-align: left; padding: 0.85rem 1.1rem; margin-bottom: 0.5rem; background: #fff; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; color: #1a1a1a; cursor: pointer; font-family: inherit; }
+.opt-btn:hover:not(:disabled) { background: #f5fdf9; border-color: #1D9E75; }
+.opt-btn.correct { background: #E1F5EE; border-color: #1D9E75; color: #0F6E56; font-weight: 600; }
+.opt-btn.wrong { background: #FCEBEB; border-color: #E24B4A; color: #A32D2D; }
+.opt-btn.reveal { background: #E1F5EE; border-color: #1D9E75; color: #0F6E56; }
+#result-banner { display: none; border-radius: 8px; padding: 0.9rem 1.1rem; margin: 0.75rem 0; font-size: 17px; font-weight: 700; text-align: center; }
+#result-banner.correct { background: #E1F5EE; color: #0F6E56; border: 1px solid #1D9E75; }
+#result-banner.wrong { background: #FCEBEB; color: #A32D2D; border: 1px solid #E24B4A; }
+#explanation { display: none; background: #f8f8f5; border-radius: 8px; padding: 1rem 1.25rem; margin: 0.5rem 0; font-size: 14px; color: #444; line-height: 1.8; }
+.ex-title { font-weight: 700; color: #1a1a1a; margin-bottom: 6px; font-size: 13px; }
+#explanation a { color: #1D9E75; font-size: 12px; word-break: break-all; }
+#next-btn { display: none; padding: 0.65rem 1.75rem; background: #fff; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; cursor: pointer; color: #333; margin-top: 0.75rem; font-family: inherit; }
+#result { display: none; text-align: center; padding: 2rem 0; }
+#result-icon { font-size: 52px; margin-bottom: 1rem; }
+#result-score { font-size: 32px; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem; }
+#result-msg { font-size: 14px; color: #666; margin-bottom: 2rem; line-height: 1.7; }
+#restart-btn { padding: 0.7rem 2rem; background: #1D9E75; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; color: #fff; font-family: inherit; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -67,110 +65,14 @@
     <button id="restart-btn">もう一度挑戦する</button>
   </div>
 </div>
-
 <script>
-const questions = [
-  {
-    label: "【１】休憩",
-    q: "9時30分〜17時（お昼：1時間休憩）6.5時間勤務の予定。\n日中忙しくて、お昼の1時間休憩が取れなかった…\n16時に帰ればOK？",
-    options: ["A：トータルの労働時間が6.5時間なのでOK","B：休憩は取らないといけないのでNG"],
-    answer: 1,
-    explanation: "労働時間の長さによって、一定以上の休憩を労働時間の「途中」で取る必要があります。\nトータルの時間を調整しても、休憩を取らないことにはなりません。",
-    url: "https://www.mhlw.go.jp/bunya/roudoukijun/roudoujouken02/jikan.html",
-    urlLabel: "厚生労働省：労働時間・休憩・休日"
-  },
-  {
-    label: "【２】有休（年休）",
-    q: "シフトは、毎週（月）（火）（木）（金）です。\n週により変則もありますが週4日。\n月火木金の4日働いて、あと平日（水）に有休は取れますか？",
-    options: ["A：取れる","B：取れない"],
-    answer: 1,
-    explanation: "有休は、所定労働日に使える権利です。\nシフトで（水）が所定休日となっている場合、その日に有休を使うことはできません。",
-    url: "https://www.jtuc-rengo.or.jp/soudan/qa/data/QA_20.html",
-    urlLabel: "連合：有給休暇Q&A"
-  }
-];
-
-let current = 0, score = 0, answered = false;
-
-function showQuestion() {
-  const q = questions[current];
-  answered = false;
-  document.getElementById('progress-bar').style.width = (current / questions.length * 100) + '%';
-  document.getElementById('q-num').textContent = `問題 ${current + 1} / ${questions.length}`;
-  document.getElementById('score-disp').textContent = `正解: ${score}`;
-  document.getElementById('q-label').textContent = q.label;
-  document.getElementById('q-text').textContent = q.q;
-  document.getElementById('explanation').style.display = 'none';
-  document.getElementById('next-btn').style.display = 'none';
-  const banner = document.getElementById('result-banner');
-  banner.style.display = 'none'; banner.className = ''; banner.textContent = '';
-  document.getElementById('options-wrap').innerHTML = '';
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'opt-btn'; btn.textContent = opt;
-    btn.addEventListener('click', () => selectAnswer(i));
-    document.getElementById('options-wrap').appendChild(btn);
-  });
-}
-
-function selectAnswer(idx) {
-  if (answered) return;
-  answered = true;
-  const q = questions[current];
-  const btns = document.querySelectorAll('.opt-btn');
-  btns.forEach(b => b.disabled = true);
-  const banner = document.getElementById('result-banner');
-  banner.style.display = 'block';
-  if (idx === q.answer) {
-    btns[idx].classList.add('correct');
-    score++;
-    banner.className = 'correct';
-    banner.textContent = '✅ 正解！';
-  } else {
-    btns[idx].classList.add('wrong');
-    btns[q.answer].classList.add('reveal');
-    banner.className = 'wrong';
-    banner.textContent = '❌ 不正解… 正しい答えを確認しましょう';
-  }
-  document.getElementById('score-disp').textContent = `正解: ${score}`;
-  document.getElementById('ex-body').innerHTML = q.explanation.replace(/\n/g,'<br>') + `<br><br><a href="${q.url}" target="_blank">🔗 ${q.urlLabel}</a>`;
-  document.getElementById('explanation').style.display = 'block';
-  if (current < questions.length - 1) {
-    document.getElementById('next-btn').style.display = 'inline-block';
-  } else {
-    setTimeout(showResult, 1200);
-  }
-}
-
-document.getElementById('next-btn').addEventListener('click', () => { current++; showQuestion(); });
-
-function showResult() {
-  document.getElementById('progress-bar').style.width = '100%';
-  ['meta-row','question-card','options-wrap','result-banner','explanation','next-btn'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.style.display = 'none';
-  });
-  document.getElementById('result').style.display = 'block';
-  const pct = Math.round(score / questions.length * 100);
-  let icon = '🎉', msg = '';
-  if (pct === 100) { icon = '🏆'; msg = '満点です！労働法の基本をしっかり理解されています。'; }
-  else if (pct >= 50) { icon = '📚'; msg = '惜しい！解説を読んで、もう一度確認してみましょう。'; }
-  else { icon = '💪'; msg = '労働法は身近なルール。ぜひ解説を読んで復習しましょう！'; }
-  document.getElementById('result-icon').textContent = icon;
-  document.getElementById('result-score').textContent = `${score} / ${questions.length}問正解（${pct}%）`;
-  document.getElementById('result-msg').textContent = msg;
-}
-
-document.getElementById('restart-btn').addEventListener('click', () => {
-  current = 0; score = 0;
-  ['meta-row','question-card','options-wrap'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.style.display = id === 'meta-row' ? 'flex' : '';
-  });
-  ['explanation','result-banner','result'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.style.display = 'none';
-  });
-  showQuestion();
-});
-
+const questions=[{label:"【１】休憩",q:"9時30分〜17時（お昼：1時間休憩）6.5時間勤務の予定。\n日中忙しくて、お昼の1時間休憩が取れなかった…\n16時に帰ればOK？",options:["A：トータルの労働時間が6.5時間なのでOK","B：休憩は取らないといけないのでNG"],answer:1,explanation:"労働時間の長さによって、一定以上の休憩を労働時間の「途中」で取る必要があります。\nトータルの時間を調整しても、休憩を取らないことにはなりません。",url:"https://www.mhlw.go.jp/bunya/roudoukijun/roudoujouken02/jikan.html",urlLabel:"厚生労働省：労働時間・休憩・休日"},{label:"【２】有休（年休）",q:"シフトは、毎週（月）（火）（木）（金）です。\n週により変則もありますが週4日。\n月火木金の4日働いて、あと平日（水）に有休は取れますか？",options:["A：取れる","B：取れない"],answer:1,explanation:"有休は、所定労働日に使える権利です。\nシフトで（水）が所定休日となっている場合、その日に有休を使うことはできません。",url:"https://www.jtuc-rengo.or.jp/soudan/qa/data/QA_20.html",urlLabel:"連合：有給休暇Q&A"}];
+let current=0,score=0,answered=false;
+function showQuestion(){const q=questions[current];answered=false;document.getElementById('progress-bar').style.width=(current/questions.length*100)+'%';document.getElementById('q-num').textContent=`問題 ${current+1} / ${questions.length}`;document.getElementById('score-disp').textContent=`正解: ${score}`;document.getElementById('q-label').textContent=q.label;document.getElementById('q-text').textContent=q.q;document.getElementById('explanation').style.display='none';document.getElementById('next-btn').style.display='none';const banner=document.getElementById('result-banner');banner.style.display='none';banner.className='';banner.textContent='';document.getElementById('options-wrap').innerHTML='';q.options.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='opt-btn';btn.textContent=opt;btn.addEventListener('click',()=>selectAnswer(i));document.getElementById('options-wrap').appendChild(btn);});}
+function selectAnswer(idx){if(answered)return;answered=true;const q=questions[current];const btns=document.querySelectorAll('.opt-btn');btns.forEach(b=>b.disabled=true);const banner=document.getElementById('result-banner');banner.style.display='block';if(idx===q.answer){btns[idx].classList.add('correct');score++;banner.className='correct';banner.textContent='✅ 正解！';}else{btns[idx].classList.add('wrong');btns[q.answer].classList.add('reveal');banner.className='wrong';banner.textContent='❌ 不正解… 正しい答えを確認しましょう';}document.getElementById('score-disp').textContent=`正解: ${score}`;document.getElementById('ex-body').innerHTML=q.explanation.replace(/\n/g,'<br>')+`<br><br><a href="${q.url}" target="_blank">🔗 ${q.urlLabel}</a>`;document.getElementById('explanation').style.display='block';if(current<questions.length-1){document.getElementById('next-btn').style.display='inline-block';}else{setTimeout(showResult,1200);}}
+document.getElementById('next-btn').addEventListener('click',()=>{current++;showQuestion();});
+function showResult(){document.getElementById('progress-bar').style.width='100%';['meta-row','question-card','options-wrap','result-banner','explanation','next-btn'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});document.getElementById('result').style.display='block';const pct=Math.round(score/questions.length*100);let icon='🎉',msg='';if(pct===100){icon='🏆';msg='満点です！労働法の基本をしっかり理解されています。';}else if(pct>=50){icon='📚';msg='惜しい！解説を読んで、もう一度確認してみましょう。';}else{icon='💪';msg='労働法は身近なルール。ぜひ解説を読んで復習しましょう！';}document.getElementById('result-icon').textContent=icon;document.getElementById('result-score').textContent=`${score} / ${questions.length}問正解（${pct}%）`;document.getElementById('result-msg').textContent=msg;}
+document.getElementById('restart-btn').addEventListener('click',()=>{current=0;score=0;['question-card','options-wrap'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='';});document.getElementById('meta-row').style.display='flex';['explanation','result-banner','result'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});showQuestion();});
 showQuestion();
 </script>
 </body>
