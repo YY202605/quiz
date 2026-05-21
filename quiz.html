@@ -46,7 +46,7 @@ body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-s
   </div>
   <div id="progress-bg"><div id="progress-bar"></div></div>
   <div id="meta-row">
-    <span id="q-num">問題 1 / 2</span>
+    <span id="q-num">問題 1 / 3</span>
     <span id="score-disp">正解: 0</span>
   </div>
   <div id="question-card">
@@ -86,6 +86,15 @@ const questions=[
     explanation:"有休は、所定労働日に使える権利です。\nシフトで（水）が所定休日となっている場合、その日に有休を使うことはできません。",
     url:"https://www.jtuc-rengo.or.jp/soudan/qa/data/QA_20.html",
     urlLabel:"連合：有給休暇Q&A"
+  },
+  {
+    label:"【３】休憩（その２）",
+    q:"ものすごく忙しい日で…結局、9時から23時過ぎまで勤務…終電ギリギリに…\n休憩時間って、何時間取ればよいの？",
+    options:["A：1時間で十分","B：2時間は必要"],
+    answer:0,
+    explanation:"休憩時間のルールは…\n・労働時間が6時間を超え8時間以下の場合：少なくとも45分\n・労働時間が8時間を超える場合：少なくとも1時間\n\nなので、超長い労働時間であっても、1時間あれば問題はないんです。\n（でも本当は、お昼の1時間以外にも、休憩すべきですよね…）",
+    url:"https://www.mhlw.go.jp/bunya/roudoukijun/roudoujouken02/jikan.html",
+    urlLabel:"厚生労働省：労働時間・休憩・休日"
   }
 ];
 let current=0,score=0,answered=false;
@@ -127,21 +136,13 @@ function selectAnswer(idx){
   document.getElementById('score-disp').textContent=`正解: ${score}`;
   document.getElementById('ex-body').innerHTML=q.explanation.replace(/\n/g,'<br>')+`<br><br><a href="${q.url}" target="_blank">🔗 ${q.urlLabel}</a>`;
   document.getElementById('explanation').style.display='block';
-  // 最後の問題も含め、常に手動で「次へ」ボタンを表示
   const nextBtn=document.getElementById('next-btn');
   nextBtn.style.display='inline-block';
-  if(current===questions.length-1){
-    nextBtn.textContent='結果を見る 🏁';
-  }else{
-    nextBtn.textContent='次の問題 →';
-  }
+  nextBtn.textContent=current===questions.length-1?'結果を見る 🏁':'次の問題 →';
 }
 document.getElementById('next-btn').addEventListener('click',()=>{
-  if(current===questions.length-1){
-    showResult();
-  }else{
-    current++;showQuestion();
-  }
+  if(current===questions.length-1){showResult();}
+  else{current++;showQuestion();}
 });
 function showResult(){
   document.getElementById('progress-bar').style.width='100%';
@@ -152,7 +153,8 @@ function showResult(){
   const pct=Math.round(score/questions.length*100);
   let icon='🎉',msg='';
   if(pct===100){icon='🏆';msg='満点です！労働法の基本をしっかり理解されています。';}
-  else if(pct>=50){icon='📚';msg='惜しい！解説を読んで、もう一度確認してみましょう。';}
+  else if(pct>=60){icon='👍';msg='よく理解されています。解説も確認してみましょう。';}
+  else if(pct>=30){icon='📚';msg='惜しい！解説を読んで、もう一度確認してみましょう。';}
   else{icon='💪';msg='労働法は身近なルール。ぜひ解説を読んで復習しましょう！';}
   document.getElementById('result-icon').textContent=icon;
   document.getElementById('result-score').textContent=`${score} / ${questions.length}問正解（${pct}%）`;
